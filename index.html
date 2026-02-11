@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDC Workforce Development Intake</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --idc-orange: #E8751A;
+    --idc-orange-dark: #C4600F;
+    --idc-orange-light: #FFF3E8;
+    --idc-orange-hover: #D16815;
+    --text-primary: #1A1A1A;
+    --text-secondary: #4A4A4A;
+    --text-muted: #717171;
+    --border: #D4D4D4;
+    --border-light: #E8E8E8;
+    --bg-white: #FFFFFF;
+    --bg-light: #FAFAFA;
+    --bg-section: #F5F5F5;
+    --success: #2E7D32;
+    --success-light: #E8F5E9;
+    --error: #C62828;
+    --error-light: #FFEBEE;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', -apple-system, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: var(--bg-white);
+    border-bottom: 3px solid var(--idc-orange);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .header-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .header-text p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .header-address {
+    text-align: right;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Progress */
+  .progress-container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+
+  .progress-steps {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--border-light);
+    border-radius: 2px;
+    transition: background 0.4s ease;
+  }
+
+  .progress-bar.active {
+    background: var(--idc-orange);
+  }
+
+  .progress-bar.completed {
+    background: var(--success);
+  }
+
+  .progress-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Main */
+  .main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Form Section */
+  .form-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .form-section.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--bg-light);
+  }
+
+  .card-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .card-header p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .card-body {
+    padding: 28px;
+  }
+
+  /* Legal text styling */
+  .legal-text {
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 24px;
+    background: var(--bg-section);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .legal-text::-webkit-scrollbar { width: 6px; }
+  .legal-text::-webkit-scrollbar-track { background: transparent; }
+  .legal-text::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .legal-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+
+  .legal-text h3:first-child { margin-top: 0; }
+
+  .legal-text p { margin-bottom: 12px; }
+
+  .legal-text ul {
+    margin: 8px 0 12px 20px;
+  }
+
+  .legal-text ul li {
+    margin-bottom: 6px;
+    padding-left: 4px;
+  }
+
+  .legal-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* Form elements */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-row.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .form-row.four-col {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  label .required {
+    color: var(--error);
+    margin-left: 2px;
+  }
+
+  label .hint {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  input[type="password"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text-primary);
+    background: var(--bg-white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--idc-orange);
+    box-shadow: 0 0 0 3px rgba(232, 117, 26, 0.12);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23717171' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  /* Checkbox / Radio */
+  .check-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .check-group input[type="checkbox"],
+  .check-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--idc-orange);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .check-group label {
+    font-weight: 400;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+
+  /* Yes/No toggles */
+  .yn-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .yn-row:last-child { border-bottom: none; }
+
+  .yn-label {
+    font-size: 14.5px;
+    color: var(--text-primary);
+    flex: 1;
+    padding-right: 16px;
+  }
+
+  .yn-toggle {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .yn-toggle button {
+    padding: 5px 16px;
+    border: 1.5px solid var(--border);
+    background: var(--bg-white);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+  }
+
+  .yn-toggle button:first-child { border-radius: 6px 0 0 6px; }
+  .yn-toggle button:last-child { border-radius: 0 6px 6px 0; }
+
+  .yn-toggle button.selected-yes {
+    background: var(--success-light);
+    border-color: var(--success);
+    color: var(--success);
+  }
+
+  .yn-toggle button.selected-no {
+    background: var(--bg-section);
+    border-color: var(--border);
+    color: var(--text-secondary);
+  }
+
+  /* ROI Agency Table */
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .roi-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg-section);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+  }
+
+  .roi-item span {
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .roi-item .yn-toggle { margin-left: 8px; }
+  .roi-item .yn-toggle button { padding: 4px 12px; font-size: 12px; }
+
+  /* Consent acknowledgment */
+  .consent-box {
+    background: var(--idc-orange-light);
+    border: 2px solid var(--idc-orange);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+
+  .consent-box .check-group label {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Section divider */
+  .section-divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 24px 0;
+  }
+
+  .sub-heading {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--idc-orange-dark);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Navigation */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--idc-orange);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--idc-orange-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: var(--bg-white);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-section);
+    border-color: var(--text-muted);
+  }
+
+  .btn-success {
+    background: var(--success);
+    color: white;
+    padding: 14px 36px;
+    font-size: 16px;
+  }
+
+  .btn-success:hover {
+    background: #256e29;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Signature area */
+  .signature-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    background: var(--bg-section);
+    margin-top: 8px;
+    position: relative;
+  }
+
+  .signature-area canvas {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    touch-action: none;
+  }
+
+  .signature-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .clear-sig {
+    font-size: 13px;
+    color: var(--idc-orange);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 6px;
+    font-family: inherit;
+  }
+
+  /* Completion screen */
+  .completion-screen {
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .completion-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--success-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+
+  .completion-icon svg {
+    width: 40px;
+    height: 40px;
+    color: var(--success);
+  }
+
+  .completion-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .completion-screen p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Validation */
+  .field-error {
+    border-color: var(--error) !important;
+  }
+
+  .error-msg {
+    color: var(--error);
+    font-size: 13px;
+    margin-top: 4px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* Info callout */
+  .info-callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #1E40AF;
+    line-height: 1.5;
+  }
+
+  .info-callout svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .form-row, .form-row.three-col, .form-row.four-col {
+      grid-template-columns: 1fr;
+    }
+    .check-grid { grid-template-columns: 1fr; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .header-address { display: none; }
+    .header-text h1 { font-size: 18px; }
+    .card-body { padding: 20px; }
+    .legal-text { max-height: 280px; padding: 16px; }
+    .yn-row { flex-wrap: wrap; gap: 8px; }
+  }
+
+  /* Print */
+  @media print {
+    .header { position: static; }
+    .progress-container, .nav-buttons { display: none; }
+    .form-section { display: block !important; page-break-inside: avoid; }
+    .legal-text { max-height: none; overflow: visible; }
+    .card { box-shadow: none; border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo"><img src="assets/idc-logo.png" alt="IDC Logo" onerror="this.style.display='none'; this.parentElement.style.background='#E8751A'; this.parentElement.innerHTML='IDC';this.parentElement.style.color='white';this.parentElement.style.fontWeight='700';this.parentElement.style.fontSize='18px';"></div>
+      <div class="header-text">
+        <h1>Immigrant Development Center</h1>
+        <p>Workforce Development Intake Application</p>
+      </div>
+    </div>
+    <div class="header-address">
+      725 Center Ave, Suite 1<br>
+      Moorhead, MN 56560
+    </div>
+  </div>
+</header>
+
+<!-- Progress -->
+<div class="progress-container">
+  <div class="progress-steps" id="progressSteps">
+    <div class="progress-bar active" data-step="0"></div>
+    <div class="progress-bar" data-step="1"></div>
+    <div class="progress-bar" data-step="2"></div>
+    <div class="progress-bar" data-step="3"></div>
+    <div class="progress-bar" data-step="4"></div>
+    <div class="progress-bar" data-step="5"></div>
+    <div class="progress-bar" data-step="6"></div>
+  </div>
+  <div class="progress-label">
+    <span id="stepLabel">Step 1 of 7</span>
+    <span id="sectionName">Tennessen Warning</span>
+  </div>
+</div>
+
+<!-- Main Form -->
+<main class="main">
+<form id="intakeForm" novalidate>
+
+  <!-- ========== STEP 1: Tennessen Warning ========== -->
+  <div class="form-section active" data-step="0" data-name="Tennessen Warning">
+    <div class="card">
+      <div class="card-header">
+        <h2>Tennessen Warning</h2>
+        <p>Your Rights to Data Privacy</p>
+      </div>
+      <div class="card-body">
+        <div class="legal-text">
+          <p>This tells you about your rights under the Minnesota Government Data Practices Act ("the Act"). This Act protects your privacy, but also lets us give information about you to others if a law requires it AND we tell you before we do it. The information below tells why and when we will ask for and give information about you.</p>
+
+          <h3>What kind of information do we collect?</h3>
+          <p>Generally, we only ask for two types of information from you — public information and private information. Public information is information about you that is available to anyone. Private information is information about you that can be shared only if you give us your permission or if a law allows or requires us to share the information. We use summary information for reports that do not identify you or anyone else by name or other identifying information.</p>
+
+          <h3>Why do we ask you for this information?</h3>
+          <p>We may ask you for information so we can:</p>
+          <ul>
+            <li>Tell you from other persons by the same or similar name</li>
+            <li>Decide if you can receive services from us and what or how much you can get</li>
+            <li>Help you get financial or social services from other agencies</li>
+            <li>Make reports, do research, audits, and evaluate our programs</li>
+            <li>Collect money from the government for help we give you</li>
+          </ul>
+
+          <h3>Do you have to answer the questions we ask?</h3>
+          <p>Generally, you do not have to give us information. However, if you do not give us the information, we may not be able to determine whether we can help you or get help for you from other agencies.</p>
+
+          <h3>Whom may we share the information about you?</h3>
+          <p>We may give information about you to the following agencies, if they need it to help you or help us help you. This does not mean we always share information about you with these people:</p>
+          <ul>
+            <li>MN Department of Human Services (DHS)</li>
+            <li>Department of Employment and Economic Development (DEED)</li>
+            <li>MN Housing Finance Agency (MHFA)</li>
+            <li>Anyone under contract with us or a government agency to provide services</li>
+            <li>Other government agencies who have or may provide you with help</li>
+            <li>Clay or Wilkin County or local governments with whom we work</li>
+            <li>Member agencies of a local collaborative</li>
+            <li>US Dept of Housing and Urban Development (HUD)</li>
+            <li>Guardian, conservator, or a person who has power of attorney for you</li>
+            <li>Anyone else the law says we can give the information</li>
+          </ul>
+
+          <h3>Your right to copies of information</h3>
+          <ul>
+            <li>You may ask if we have any information about you.</li>
+            <li>If we have information about you, you may ask for copies.</li>
+            <li>You may give other people permission to see and have copies of private data about you.</li>
+            <li>If you do not understand the information, you may ask to have it explained to you.</li>
+          </ul>
+
+          <h3>How do you appeal if you think information is not accurate or complete?</h3>
+          <p>Your objection must be in writing and sent to the Director of Operations of this agency at:</p>
+          <p><strong>Tolu Afolabi, Operations Director, 725 Center Ave, Suite 1, Moorhead MN 56560.</strong></p>
+          <p>You must tell us why the information is not accurate or complete. You may send your own explanation of the facts you disagree with. Your explanation will be attached any time that information is shared with another agency. For more information on how to do this, ask the staff person working with you.</p>
+        </div>
+
+        <div class="consent-box">
+          <div class="check-group">
+            <input type="checkbox" id="tennessen_ack" name="tennessen_ack" required>
+            <label for="tennessen_ack">I have read and understand the Tennessen Warning above. <span class="required">*</span></label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tennessen_name">Full Name <span class="required">*</span></label>
+            <input type="text" id="tennessen_name" name="tennessen_name" required placeholder="Enter your full name">
+          </div>
+          <div class="form-group">
+            <label for="tennessen_date">Date <span class="required">*</span></label>
+            <input type="date" id="tennessen_date" name="tennessen_date" required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <div></div>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 2: How We Use Your Personal Information + EO ========== -->
+  <div class="form-section" data-step="1" data-name="DEED Privacy & Equal Opportunity">
+    <div class="card">
+      <div class="card-header">
+        <h2>How We Use Your Personal Information</h2>
+        <p>A partnership sponsored by the Minnesota Department of Employment and Economic Development (DEED) and the Immigrant Development Center</p>
+      </div>
+      <div class="card-body">
+        <div class="legal-text">
+          <p><em>Please read the Notice below and the Equal Opportunity notice. When you finish reading, initial the final two statements, print your name, sign your name, and date the bottom of this form.</em></p>
+
+          <p>When you receive services from state or federally funded programs, we will ask you for information about yourself. The data we are asking you to provide about yourself is considered private data by <strong>Minnesota Statute 13.47 subdivision 2</strong>. In order to collect and use this data we must tell you why we need the data, how we intend to use it, and any outcomes you may experience if you supply the information or not. You may refuse to supply any or all of this information. You are not legally required to provide information about yourself. However, if you do not supply sufficient information about yourself, it may limit our ability to provide services to you. Your information may be shared with other government entities who have a legal right to this data including the U.S. Department of Labor, the Office of Higher Education, the Office of the Legislative Auditor, the State Auditor, employment and training service providers, and welfare agencies. Your information may also be shared by court order. For more information about DEED Data Practices, visit <strong>http://mn.gov/deed/about/what-guides-us/privacy</strong>.</p>
+
+          <h3>Types of personal information you might be asked to provide and why we need it:</h3>
+          <ul>
+            <li><strong>Social Security Number (SSN):</strong> Your SSN is requested to identify you as a unique individual, to find wage data, and to help us evaluate the performance of our programs.</li>
+            <li><strong>Name, address, birth date, and contact information:</strong> This is used to identify and contact you and to evaluate our performance.</li>
+            <li><strong>Age, gender, ethnicity, race, disability, and economic status:</strong> Demographic information is collected to help determine if you are eligible for additional assistance and to evaluate our performance.</li>
+            <li><strong>Veteran status:</strong> Veteran status is asked to determine if you are eligible for priority services and to evaluate our performance.</li>
+            <li><strong>Other personal information, such as school records, job skills and work history:</strong> Education and work history is used to help plan your employment and training goals and to evaluate our performance.</li>
+          </ul>
+
+          <h3>Information about you will be used to:</h3>
+          <ul>
+            <li>Decide if you are eligible for services, which services you are eligible for, and to coordinate services provided to you.</li>
+            <li>Help you obtain employment by sharing work and education history with prospective employers.</li>
+            <li>Improve public services by analyzing data about our performance.</li>
+          </ul>
+        </div>
+
+        <div class="consent-box">
+          <div class="check-group">
+            <input type="checkbox" id="deed_privacy_ack" name="deed_privacy_ack" required>
+            <label for="deed_privacy_ack">I have read the above Notice. I understand that information may be shared with other service provider agencies in accordance with the Minnesota Government Data Practices Act. <span class="required">*</span></label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Equal Opportunity Is the Law -->
+        <div class="sub-heading">Equal Opportunity Is the Law</div>
+        <div class="legal-text">
+          <p>It is against the law for this recipient of Federal financial assistance to discriminate on the following bases: against any individual in the United States, on the basis of race, color, religion, sex (including pregnancy, childbirth, and related medical conditions, sex stereotyping, transgender status, and gender identity), national origin (including limited English proficiency), age, disability, or political affiliation or belief, or, against any beneficiary of, applicant to, or participant in programs financially assisted under Title I of the Workforce Innovation and Opportunity Act, on the basis of the individual's citizenship status or participation in any WIOA Title I-financially assisted program or activity.</p>
+
+          <p>The recipient must not discriminate in any of the following areas: deciding who will be admitted, or have access, to any WIOA Title I-financially assisted program or activity; providing opportunities in, or treating any person with regard to, such a program or activity; or making employment decisions in the administration of, or in connection with, such a program or activity.</p>
+
+          <p>Recipients of federal financial assistance must take reasonable steps to ensure that communications with individuals with disabilities are as effective as communications with others. This means that, upon request and at no cost to the individual, recipients are required to provide appropriate auxiliary aids and services to qualified individuals with disabilities.</p>
+
+          <h3>What To Do If You Believe You Have Experienced Discrimination</h3>
+          <p>If you think that you have been subjected to discrimination under a WIOA Title I-financially assisted program or activity, you may file a complaint within 180 days from the date of the alleged violation with either: the recipient's Equal Opportunity Officer (or the person whom the recipient has designated for this purpose);</p>
+
+          <p><strong>WIOA EO Officer:</strong> Karen Lilledahl, DEED, Office of Diversity & Equal Opportunity, 1st National Bank Building, 332 Minnesota Street E200, St. Paul, MN 55101, 651-259-7089 (Voice), 651-297-5343 (Fax), Karen.Lilledahl@state.mn.us</p>
+          <p>or</p>
+          <p><strong>State-level EO Officer:</strong> Heather Stein, DEED, Office of Diversity & Equal Opportunity, 1st National Bank Building, 332 Minnesota Street E200, St. Paul, MN 55101, 651-259-7097 (Voice), 651-297-5343 (Fax), heather.stein@state.mn.us</p>
+
+          <p><strong>Director, Civil Rights Center (CRC), U.S. Department of Labor</strong><br>
+          200 Constitution Avenue NW, Room N-4123, Washington, DC 20210<br>
+          or electronically as directed on the CRC website at www.dol.gov/crc.</p>
+
+          <p>If you file your complaint with the recipient, you must wait either until the recipient issues a written Notice of Final Action, or until 90 days have passed (whichever is sooner), before filing with the Civil Rights Center (see address above). If the recipient does not give you a written Notice of Final Action within 90 days of the day on which you filed your complaint, you may file a complaint with CRC before receiving that Notice. However, you must file your CRC complaint within 30 days of the 90-day deadline (in other words, within 120 days after the day on which you filed your complaint with the recipient). If the recipient does give you a written Notice of Final Action on your complaint, but you are dissatisfied with the decision or resolution, you may file a complaint with CRC. You must file your CRC complaint within 30 days of the date on which you received the Notice of Final Action.</p>
+        </div>
+
+        <div class="consent-box">
+          <div class="check-group">
+            <input type="checkbox" id="eo_ack" name="eo_ack" required>
+            <label for="eo_ack">I have read the Equal Opportunity notice. I understand that I have the right to file a complaint of discrimination. <span class="required">*</span></label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="deed_name">Name (Print) <span class="required">*</span></label>
+            <input type="text" id="deed_name" name="deed_name" required>
+          </div>
+          <div class="form-group">
+            <label>Signature</label>
+            <div class="signature-area">
+              <canvas id="sigCanvas2" width="300" height="80"></canvas>
+              <div class="signature-label">Draw your signature above</div>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas2')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="deed_date">Date <span class="required">*</span></label>
+            <input type="date" id="deed_date" name="deed_date" required>
+          </div>
+        </div>
+
+        <div class="form-group" id="parentGuardianSection" style="margin-top: 8px;">
+          <label for="deed_parent_sig">Signature of Parent/Guardian <span class="hint">(if under 18)</span></label>
+          <div class="signature-area">
+            <canvas id="sigCanvas2b" width="300" height="80"></canvas>
+            <div class="signature-label">Parent/Guardian signature (if applicable)</div>
+            <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas2b')">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 3: Release of Information ========== -->
+  <div class="form-section" data-step="2" data-name="Release of Information">
+    <div class="card">
+      <div class="card-header">
+        <h2>Release of Information</h2>
+        <p>IDC - Immigrant Development Center, 725 Center Ave, Suite 1, Moorhead, MN 56560</p>
+      </div>
+      <div class="card-body">
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="roi_last_name">Legal Last Name <span class="required">*</span></label>
+            <input type="text" id="roi_last_name" name="roi_last_name" required>
+          </div>
+          <div class="form-group">
+            <label for="roi_first_name">Legal First Name <span class="required">*</span></label>
+            <input type="text" id="roi_first_name" name="roi_first_name" required>
+          </div>
+          <div class="form-group">
+            <label for="roi_dob">Date of Birth <span class="required">*</span></label>
+            <input type="date" id="roi_dob" name="roi_dob" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="roi_other_names">Other names used by applicant</label>
+          <input type="text" id="roi_other_names" name="roi_other_names" placeholder="If applicable">
+        </div>
+
+        <div class="section-divider"></div>
+
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">By signing this form, I authorize the following record holder(s) to disclose specific confidential information about me. For each agency, select whether you authorize a mutual exchange of information.</p>
+
+        <div class="sub-heading">Agency Authorization</div>
+        <div class="roi-grid" id="roiAgencies">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="section-divider"></div>
+
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">The following information is requested: name, sex, marital status, sex/age of family members, race/ethnicity, veteran status, income verification, current housing status, services currently received, and unmet needs.</p>
+
+        <div class="section-divider"></div>
+
+        <div class="sub-heading">Purpose of Information Request</div>
+        <div class="roi-grid" id="roiPurpose">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label for="roi_expiry">Release in effect until <span class="hint">(not more than one year from today)</span> <span class="required">*</span></label>
+          <input type="date" id="roi_expiry" name="roi_expiry" required>
+        </div>
+
+        <div class="legal-text" style="max-height: 160px; margin-top: 16px;">
+          <h3>Client Consent</h3>
+          <p>This authorization is voluntary and remains in effect until the above date or event, unless specifically revoked by written notice to the agency or person. Any information disclosed prior to written revocation of this authorization shall not be a breach of confidentiality. A photocopy of this authorization is as effective as the original. Unless otherwise agreed in writing, information may be disclosed under this authorization in any form or medium including, but not limited to oral, written, or electronic transmission.</p>
+          <p>You give permission to discuss your request for assistance with the selected agencies above. It is further agreed upon that information during the application process is shared with Immigrant Development Center employees for determining if you are eligible for services. You release IDC and any of its employees from any claims arising from this authorization and disclosure.</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="roi_applicant_name">Applicant Printed Name <span class="required">*</span></label>
+            <input type="text" id="roi_applicant_name" name="roi_applicant_name" required>
+          </div>
+          <div class="form-group">
+            <label>Applicant Signature <span class="required">*</span></label>
+            <div class="signature-area">
+              <canvas id="sigCanvas3" width="300" height="80"></canvas>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas3')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="roi_sign_date">Date <span class="required">*</span></label>
+            <input type="date" id="roi_sign_date" name="roi_sign_date" required>
+          </div>
+        </div>
+
+        <div class="check-group" style="margin-bottom: 16px;">
+          <input type="checkbox" id="roi_verbal" name="roi_verbal">
+          <label for="roi_verbal">Check if verbal consent was obtained. <span class="hint">Note: If verbal consent was obtained, a signature by the client must be obtained on this ROI the first time the client is met with in-person.</span></label>
+        </div>
+
+        <div class="form-row four-col">
+          <div class="form-group">
+            <label for="roi_auth_name">Authorized Rep Name</label>
+            <input type="text" id="roi_auth_name" name="roi_auth_name" placeholder="If applicable">
+          </div>
+          <div class="form-group">
+            <label>Authorized Rep Signature</label>
+            <div class="signature-area">
+              <canvas id="sigCanvas3b" width="220" height="70"></canvas>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas3b')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="roi_auth_relationship">Relationship</label>
+            <input type="text" id="roi_auth_relationship" name="roi_auth_relationship">
+          </div>
+          <div class="form-group">
+            <label for="roi_auth_date">Date</label>
+            <input type="date" id="roi_auth_date" name="roi_auth_date">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 4: Photo Release ========== -->
+  <div class="form-section" data-step="3" data-name="Photo/Media Release">
+    <div class="card">
+      <div class="card-header">
+        <h2>Photo / Media Release</h2>
+        <p>Permission to use photographs for IDC communications</p>
+      </div>
+      <div class="card-body">
+        <div class="legal-text" style="max-height: none; overflow: visible;">
+          <p>I give IDC (Immigrant Development Center) permission to use my picture/my child's picture on our website, social media, blog, newsletters, etc. This picture(s) will be used to showcase the work we do to support families and individuals navigate their needs in our community. This picture may also be used in brochures to show the continued need for these services.</p>
+        </div>
+
+        <div class="consent-box" style="margin-top: 16px;">
+          <div class="check-group">
+            <input type="checkbox" id="photo_consent" name="photo_consent">
+            <label for="photo_consent">I consent to IDC using my photo/my child's photo as described above.</label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="photo_name">Name <span class="required">*</span></label>
+            <input type="text" id="photo_name" name="photo_name" required>
+          </div>
+          <div class="form-group">
+            <label for="photo_parent">Parent or Guardian <span class="hint">(if applicable)</span></label>
+            <input type="text" id="photo_parent" name="photo_parent">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Signature <span class="required">*</span></label>
+            <div class="signature-area">
+              <canvas id="sigCanvas4" width="300" height="80"></canvas>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas4')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="photo_date">Date <span class="required">*</span></label>
+            <input type="date" id="photo_date" name="photo_date" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Witness Signature</label>
+            <div class="signature-area">
+              <canvas id="sigCanvas4b" width="300" height="80"></canvas>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas4b')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="photo_witness_date">Witness Date</label>
+            <input type="date" id="photo_witness_date" name="photo_witness_date">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 5: Application - Personal Info ========== -->
+  <div class="form-section" data-step="4" data-name="Application - Personal Information">
+    <div class="card">
+      <div class="card-header">
+        <h2>Application for Workforce Development</h2>
+        <p>Personal information and demographics</p>
+      </div>
+      <div class="card-body">
+        <div class="info-callout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>Fields marked with <strong style="color: var(--error);">*</strong> are required. Your Social Security Number is requested to identify you as a unique individual and to find wage data.</span>
+        </div>
+
+        <!-- SSN -->
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="app_ssn">Social Security Number <span class="required">*</span></label>
+            <input type="password" id="app_ssn" name="app_ssn" placeholder="XXX-XX-XXXX" maxlength="11" required autocomplete="off">
+          </div>
+          <div class="form-group" style="grid-column: span 2;"></div>
+        </div>
+
+        <!-- Name -->
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="app_last_name">Last Name <span class="required">*</span></label>
+            <input type="text" id="app_last_name" name="app_last_name" required>
+          </div>
+          <div class="form-group">
+            <label for="app_first_name">First Name <span class="required">*</span></label>
+            <input type="text" id="app_first_name" name="app_first_name" required>
+          </div>
+          <div class="form-group">
+            <label for="app_preferred_name">Preferred First Name</label>
+            <input type="text" id="app_preferred_name" name="app_preferred_name">
+          </div>
+        </div>
+
+        <div class="form-group" style="max-width: 280px;">
+          <label for="app_dob">Date of Birth <span class="required">*</span></label>
+          <input type="date" id="app_dob" name="app_dob" required>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Address</div>
+
+        <div class="form-group">
+          <label for="app_address1">Address Line 1 <span class="required">*</span></label>
+          <input type="text" id="app_address1" name="app_address1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="app_address2">Address Line 2</label>
+          <input type="text" id="app_address2" name="app_address2" placeholder="Apt, Suite, Unit, etc.">
+        </div>
+
+        <div class="form-row four-col">
+          <div class="form-group">
+            <label for="app_city">City <span class="required">*</span></label>
+            <input type="text" id="app_city" name="app_city" required>
+          </div>
+          <div class="form-group">
+            <label for="app_state">State <span class="required">*</span></label>
+            <input type="text" id="app_state" name="app_state" required value="MN">
+          </div>
+          <div class="form-group">
+            <label for="app_zip">Zip <span class="required">*</span></label>
+            <input type="text" id="app_zip" name="app_zip" required maxlength="10">
+          </div>
+          <div class="form-group">
+            <label for="app_county">County <span class="required">*</span></label>
+            <input type="text" id="app_county" name="app_county" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="max-width: 280px;">
+          <label for="app_country">Country of Origin</label>
+          <input type="text" id="app_country" name="app_country">
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Contact Information</div>
+
+        <div id="phoneEntries">
+          <div class="form-row three-col phone-entry">
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" name="app_phone_1" required placeholder="(XXX) XXX-XXXX">
+            </div>
+            <div class="form-group">
+              <label>Phone Type</label>
+              <select name="app_phone_type_1">
+                <option value="">Select...</option>
+                <option value="mobile">Mobile</option>
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="display:flex; align-items:flex-end; padding-bottom: 16px;">
+              <button type="button" class="clear-sig" onclick="addPhone()" style="color: var(--idc-orange);">+ Add another phone</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_email">Email <span class="required">*</span></label>
+            <input type="email" id="app_email" name="app_email" required>
+          </div>
+          <div class="form-group">
+            <label for="app_email_type">Email Type</label>
+            <select id="app_email_type" name="app_email_type">
+              <option value="">Select...</option>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_email2">Secondary Email</label>
+            <input type="email" id="app_email2" name="app_email2">
+          </div>
+          <div class="form-group">
+            <label for="app_email_type2">Email Type</label>
+            <select id="app_email_type2" name="app_email_type2">
+              <option value="">Select...</option>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Demographics</div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="app_veteran">Veteran Status <span class="required">*</span></label>
+            <select id="app_veteran" name="app_veteran" required>
+              <option value="">Select...</option>
+              <option value="non_veteran">Non-Veteran</option>
+              <option value="veteran">Veteran</option>
+              <option value="spouse">Eligible Spouse</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Citizenship <span class="required">*</span></label>
+            <div style="display: flex; gap: 20px; margin-top: 8px;">
+              <div class="check-group">
+                <input type="radio" id="citizen" name="app_citizenship" value="citizen" required>
+                <label for="citizen">Citizen</label>
+              </div>
+              <div class="check-group">
+                <input type="radio" id="right_to_work" name="app_citizenship" value="right_to_work">
+                <label for="right_to_work">Right to Work</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="app_gender">Gender <span class="required">*</span></label>
+            <select id="app_gender" name="app_gender" required>
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="non_binary">Non-Binary</option>
+              <option value="prefer_not">Prefer Not to Say</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_ethnicity">Ethnicity <span class="required">*</span></label>
+            <select id="app_ethnicity" name="app_ethnicity" required>
+              <option value="">Select...</option>
+              <option value="hispanic">Hispanic or Latino</option>
+              <option value="not_hispanic">Not Hispanic or Latino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Race <span class="required">*</span> <span class="hint">(select all that apply)</span></label>
+            <div class="check-grid" style="margin-top: 6px;">
+              <div class="check-group">
+                <input type="checkbox" id="race_aian" name="app_race" value="american_indian_alaska_native">
+                <label for="race_aian">American Indian or Alaska Native</label>
+              </div>
+              <div class="check-group">
+                <input type="checkbox" id="race_asian" name="app_race" value="asian">
+                <label for="race_asian">Asian</label>
+              </div>
+              <div class="check-group">
+                <input type="checkbox" id="race_black" name="app_race" value="black_african_american">
+                <label for="race_black">Black or African American</label>
+              </div>
+              <div class="check-group">
+                <input type="checkbox" id="race_nhpi" name="app_race" value="hawaiian_pacific_islander">
+                <label for="race_nhpi">Hawaiian Native/Pacific Islander</label>
+              </div>
+              <div class="check-group">
+                <input type="checkbox" id="race_white" name="app_race" value="white">
+                <label for="race_white">White</label>
+              </div>
+              <div class="check-group">
+                <input type="checkbox" id="race_dnsi" name="app_race" value="did_not_self_identify">
+                <label for="race_dnsi">Did Not Self-Identify</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label>Immigration Status <span class="required">*</span></label>
+            <div style="display: flex; gap: 20px; margin-top: 8px;">
+              <div class="check-group">
+                <input type="radio" id="immigrant" name="app_immigration" value="immigrant" required>
+                <label for="immigrant">Immigrant</label>
+              </div>
+              <div class="check-group">
+                <input type="radio" id="refugee" name="app_immigration" value="refugee">
+                <label for="refugee">Refugee</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="app_lep">Limited English Proficiency</label>
+            <select id="app_lep" name="app_lep">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Family & Income</div>
+
+        <div class="form-row four-col">
+          <div class="form-group">
+            <label for="app_family_status">Family Status</label>
+            <select id="app_family_status" name="app_family_status">
+              <option value="">Select...</option>
+              <option value="single">Single</option>
+              <option value="married">Married</option>
+              <option value="separated">Separated</option>
+              <option value="divorced">Divorced</option>
+              <option value="widowed">Widowed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="app_family_size">Actual Family Size <span class="required">*</span></label>
+            <input type="number" id="app_family_size" name="app_family_size" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="app_dependents">Dependents Under 18</label>
+            <input type="number" id="app_dependents" name="app_dependents" min="0">
+          </div>
+          <div class="form-group">
+            <label for="app_annual_income">Annual Family Income <span class="required">*</span></label>
+            <input type="text" id="app_annual_income" name="app_annual_income" required placeholder="$">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 6: Application - Education, Benefits, Work ========== -->
+  <div class="form-section" data-step="5" data-name="Application - Education & Work History">
+    <div class="card">
+      <div class="card-header">
+        <h2>Education, Benefits & Work History</h2>
+        <p>Continued application details</p>
+      </div>
+      <div class="card-body">
+        <div class="sub-heading">Education</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_education">Highest Level of Education <span class="required">*</span></label>
+            <select id="app_education" name="app_education" required>
+              <option value="">Select...</option>
+              <option value="no_formal">No Formal Education</option>
+              <option value="elementary">Elementary (K-5)</option>
+              <option value="middle_school">Middle School (6-8)</option>
+              <option value="some_high_school">Some High School</option>
+              <option value="hs_diploma">High School Diploma / GED</option>
+              <option value="some_college">Some College</option>
+              <option value="certificate">Certificate / Vocational</option>
+              <option value="associates">Associate's Degree</option>
+              <option value="bachelors">Bachelor's Degree</option>
+              <option value="masters">Master's Degree</option>
+              <option value="doctoral">Doctoral / Professional Degree</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="app_financial_aid">Financial Aid Status</label>
+            <select id="app_financial_aid" name="app_financial_aid">
+              <option value="">Select...</option>
+              <option value="receiving">Currently Receiving</option>
+              <option value="applied">Applied / Pending</option>
+              <option value="not_receiving">Not Receiving</option>
+              <option value="na">Not Applicable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Benefits & Assistance</div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Please indicate whether you currently receive any of the following:</p>
+
+        <div id="benefitsSection">
+          <div class="yn-row">
+            <span class="yn-label">SSI Recipient</span>
+            <div class="yn-toggle" data-field="app_ssi">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_ssi" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">SSDI Recipient</span>
+            <div class="yn-toggle" data-field="app_ssdi">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_ssdi" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">TANF/MFIP Recipient</span>
+            <div class="yn-toggle" data-field="app_tanf">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_tanf" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">SNAP Recipient</span>
+            <div class="yn-toggle" data-field="app_snap">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_snap" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">Diversionary Work Recipient</span>
+            <div class="yn-toggle" data-field="app_div_work">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_div_work" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">General Assistance Recipient</span>
+            <div class="yn-toggle" data-field="app_gen_assist">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_gen_assist" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">Refugee Assistance Recipient</span>
+            <div class="yn-toggle" data-field="app_refugee_assist">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_refugee_assist" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">At or Below 200% Federal Poverty Guidelines</span>
+            <div class="yn-toggle" data-field="app_poverty">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_poverty" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">Disability Status</span>
+            <div class="yn-toggle" data-field="app_disability">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_disability" value="">
+          </div>
+        </div>
+
+        <div class="form-group" id="disabilitySpecify" style="margin-top: 12px; display: none;">
+          <label for="app_disability_specify">If yes, please specify:</label>
+          <input type="text" id="app_disability_specify" name="app_disability_specify">
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="yn-row">
+            <span class="yn-label">Homeless</span>
+            <div class="yn-toggle" data-field="app_homeless">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_homeless" value="">
+          </div>
+          <div class="yn-row">
+            <span class="yn-label">Justice-Involved</span>
+            <div class="yn-toggle" data-field="app_justice">
+              <button type="button" onclick="toggleYN(this, 'Y')">Yes</button>
+              <button type="button" onclick="toggleYN(this, 'N')">No</button>
+            </div>
+            <input type="hidden" name="app_justice" value="">
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-heading">Work History</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_labor_force">Labor Force Status <span class="required">*</span></label>
+            <select id="app_labor_force" name="app_labor_force" required>
+              <option value="">Select...</option>
+              <option value="employed">Employed</option>
+              <option value="employed_not_ft">Employed, Not Full-Time</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="not_in_labor_force">Not in Labor Force</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="app_ui_status">UI Benefits Status</label>
+            <select id="app_ui_status" name="app_ui_status">
+              <option value="">Select...</option>
+              <option value="receiving">Currently Receiving</option>
+              <option value="exhausted">Exhausted Benefits</option>
+              <option value="not_receiving">Not Receiving</option>
+              <option value="na">Not Applicable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="app_covid_layoff">Layoff Related to COVID-19</label>
+            <select id="app_covid_layoff" name="app_covid_layoff">
+              <option value="">Select...</option>
+              <option value="exempt">Exempt from Work Search</option>
+              <option value="exhaustee">Exhaustee</option>
+              <option value="neither">Neither Claimant nor Exhaustee</option>
+              <option value="not_referred">Claimant Not Referred by RESEA or WPRS</option>
+              <option value="resea">Claimant Referred by RESEA</option>
+              <option value="wprs">Claimant Referred by WPRS</option>
+              <option value="na">Not Applicable</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="app_work_history_lack">Lack of Significant Work History</label>
+            <select id="app_work_history_lack" name="app_work_history_lack">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row three-col">
+          <div class="form-group">
+            <label for="app_hourly_wage">Hourly Wage of Current Job</label>
+            <input type="text" id="app_hourly_wage" name="app_hourly_wage" placeholder="$">
+          </div>
+          <div class="form-group">
+            <label for="app_weeks_unemployed">Weeks of Unemployment in Last 52</label>
+            <input type="number" id="app_weeks_unemployed" name="app_weeks_unemployed" min="0" max="52">
+          </div>
+          <div class="form-group">
+            <label for="app_consent_partners">Consent to Share with Partners <span class="required">*</span></label>
+            <select id="app_consent_partners" name="app_consent_partners" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 7: TABE Test Contract ========== -->
+  <div class="form-section" data-step="6" data-name="TABE Test Contract & Submit">
+    <div class="card">
+      <div class="card-header">
+        <h2>TABE Test Contract</h2>
+        <p>Required for welding course enrollment</p>
+      </div>
+      <div class="card-body">
+        <div class="legal-text" style="max-height: none; overflow: visible;">
+          <p>Minnesota residents are required to take the TABE test before attending the welding course. This is not an optional test; it is <strong>REQUIRED</strong> before the start of the welding course.</p>
+
+          <p>This test is being administered at the <strong>Moorhead Adult Basic Education Center, 2777 34th St S, Moorhead, MN 56560</strong>.</p>
+
+          <p><strong>This is a two-day test; you are required to be there both days.</strong></p>
+        </div>
+
+        <div class="info-callout" style="margin-top: 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>Test dates and times will be communicated by your case manager. By signing below, you acknowledge that the TABE test is a mandatory requirement for welding program enrollment.</span>
+        </div>
+
+        <div class="consent-box">
+          <div class="check-group">
+            <input type="checkbox" id="tabe_ack" name="tabe_ack">
+            <label for="tabe_ack">I understand that the TABE test is required before starting the welding course, and I commit to attending both testing days.</label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Client Signature <span class="required">*</span></label>
+            <div class="signature-area">
+              <canvas id="sigCanvas7" width="300" height="80"></canvas>
+              <button type="button" class="clear-sig" onclick="clearSignature('sigCanvas7')">Clear</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tabe_date">Date <span class="required">*</span></label>
+            <input type="date" id="tabe_date" name="tabe_date" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tabe_witness">Witness Name</label>
+            <input type="text" id="tabe_witness" name="tabe_witness">
+          </div>
+          <div class="form-group">
+            <label for="tabe_witness_date">Witness Date</label>
+            <input type="date" id="tabe_witness_date" name="tabe_witness_date">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Submit -->
+    <div class="card">
+      <div class="card-body" style="text-align: center; padding: 40px;">
+        <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 8px;">Ready to Submit</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Please review all sections before submitting your application.</p>
+        <button type="button" class="btn btn-success" onclick="submitForm()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px;"><path d="M20 6L9 17l-5-5"/></svg>
+          Submit Application
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-secondary" onclick="prevStep()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        Back
+      </button>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- ========== COMPLETION SCREEN ========== -->
+  <div class="form-section" data-step="7" data-name="Complete" id="completionSection">
+    <div class="card">
+      <div class="card-body completion-screen">
+        <div class="completion-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2>Application Submitted</h2>
+        <p style="margin-bottom: 24px;">Thank you for completing the IDC Workforce Development intake application. Our team will review your information and be in touch with next steps.</p>
+        <p style="font-size: 14px; color: var(--text-muted);">Immigrant Development Center<br>725 Center Ave, Suite 1<br>Moorhead, MN 56560</p>
+      </div>
+    </div>
+  </div>
+
+</form>
+</main>
+
+<script>
+  // ===== State =====
+  let currentStep = 0;
+  const totalSteps = 7;
+  let phoneCount = 1;
+
+  const sectionNames = [
+    'Tennessen Warning',
+    'DEED Privacy & Equal Opportunity',
+    'Release of Information',
+    'Photo/Media Release',
+    'Personal Information',
+    'Education & Work History',
+    'TABE Test & Submit',
+    'Complete'
+  ];
+
+  // ===== Navigation =====
+  function updateProgress() {
+    document.querySelectorAll('.progress-bar').forEach((bar, i) => {
+      bar.classList.remove('active', 'completed');
+      if (i < currentStep) bar.classList.add('completed');
+      if (i === currentStep) bar.classList.add('active');
+    });
+    document.getElementById('stepLabel').textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+    document.getElementById('sectionName').textContent = sectionNames[currentStep];
+
+    if (currentStep >= totalSteps) {
+      document.querySelector('.progress-container').style.display = 'none';
+    }
+  }
+
+  function showStep(step) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(`.form-section[data-step="${step}"]`);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    updateProgress();
+  }
+
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  function submitForm() {
+    // Collect form data
+    const form = document.getElementById('intakeForm');
+    const formData = new FormData(form);
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+      if (data[key]) {
+        if (Array.isArray(data[key])) data[key].push(value);
+        else data[key] = [data[key], value];
+      } else {
+        data[key] = value;
+      }
+    }
+
+    console.log('Form submitted:', data);
+
+    // Show completion
+    currentStep = totalSteps;
+    showStep(currentStep);
+  }
+
+  // ===== Y/N Toggle =====
+  function toggleYN(btn, value) {
+    const toggle = btn.parentElement;
+    const fieldName = toggle.dataset.field;
+    const hiddenInput = toggle.parentElement.querySelector(`input[name="${fieldName}"]`);
+
+    toggle.querySelectorAll('button').forEach(b => {
+      b.classList.remove('selected-yes', 'selected-no');
+    });
+
+    if (value === 'Y') {
+      btn.classList.add('selected-yes');
+    } else {
+      btn.classList.add('selected-no');
+    }
+
+    if (hiddenInput) hiddenInput.value = value;
+
+    // Show disability specify field
+    if (fieldName === 'app_disability') {
+      document.getElementById('disabilitySpecify').style.display = value === 'Y' ? 'block' : 'none';
+    }
+  }
+
+  // ===== ROI Agencies =====
+  function initROI() {
+    const agencies = [
+      'County Social Services', 'Landlord',
+      'Food Pantry', 'Presentation Partners in Housing',
+      'Salvation Army', 'Utility Company',
+      'Employer', 'SENDCAA',
+      'Job Service', 'Other'
+    ];
+
+    const purposes = [
+      'Coordination of Services', 'Legal Proceedings',
+      'Obtaining Collateral Information', 'Referral'
+    ];
+
+    const agencyContainer = document.getElementById('roiAgencies');
+    agencies.forEach((agency, i) => {
+      agencyContainer.innerHTML += `
+        <div class="roi-item">
+          <span>${agency}</span>
+          <div class="yn-toggle" data-field="roi_agency_${i}">
+            <button type="button" onclick="toggleYN(this, 'Y')">Y</button>
+            <button type="button" onclick="toggleYN(this, 'N')">N</button>
+          </div>
+          <input type="hidden" name="roi_agency_${i}" value="">
+        </div>
+      `;
+    });
+
+    const purposeContainer = document.getElementById('roiPurpose');
+    purposes.forEach((purpose, i) => {
+      purposeContainer.innerHTML += `
+        <div class="roi-item">
+          <span>${purpose}</span>
+          <div class="yn-toggle" data-field="roi_purpose_${i}">
+            <button type="button" onclick="toggleYN(this, 'Y')">Y</button>
+            <button type="button" onclick="toggleYN(this, 'N')">N</button>
+          </div>
+          <input type="hidden" name="roi_purpose_${i}" value="">
+        </div>
+      `;
+    });
+  }
+
+  // ===== Add Phone =====
+  function addPhone() {
+    if (phoneCount >= 4) return;
+    phoneCount++;
+    const container = document.getElementById('phoneEntries');
+    const row = document.createElement('div');
+    row.className = 'form-row three-col phone-entry';
+    row.innerHTML = `
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="app_phone_${phoneCount}" placeholder="(XXX) XXX-XXXX">
+      </div>
+      <div class="form-group">
+        <label>Phone Type</label>
+        <select name="app_phone_type_${phoneCount}">
+          <option value="">Select...</option>
+          <option value="mobile">Mobile</option>
+          <option value="home">Home</option>
+          <option value="work">Work</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group" style="display:flex; align-items:flex-end; padding-bottom: 16px;">
+        <button type="button" class="clear-sig" onclick="this.closest('.phone-entry').remove(); phoneCount--;" style="color: var(--error);">Remove</button>
+      </div>
+    `;
+    container.appendChild(row);
+  }
+
+  // ===== Signature Pads =====
+  const signaturePads = {};
+
+  function initSignaturePad(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    ctx.strokeStyle = '#1A1A1A';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      if (e.touches) {
+        return {
+          x: (e.touches[0].clientX - rect.left) * scaleX,
+          y: (e.touches[0].clientY - rect.top) * scaleY
+        };
+      }
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    function start(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function stop() { drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stop);
+    canvas.addEventListener('mouseleave', stop);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stop);
+
+    signaturePads[canvasId] = { canvas, ctx };
+  }
+
+  function clearSignature(canvasId) {
+    const pad = signaturePads[canvasId];
+    if (pad) {
+      pad.ctx.clearRect(0, 0, pad.canvas.width, pad.canvas.height);
+    }
+  }
+
+  // ===== Auto-fill today's date =====
+  function setDefaultDates() {
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+      if (input.name.includes('_date') && !input.name.includes('dob') && !input.name.includes('roi_expiry')) {
+        input.value = today;
+      }
+    });
+
+    // Set ROI expiry to 1 year from now
+    const nextYear = new Date();
+    nextYear.setFullYear(nextYear.getFullYear() + 1);
+    const roiExpiry = document.getElementById('roi_expiry');
+    if (roiExpiry) roiExpiry.value = nextYear.toISOString().split('T')[0];
+  }
+
+  // ===== SSN Formatting =====
+  function initSSNFormat() {
+    const ssnInput = document.getElementById('app_ssn');
+    if (ssnInput) {
+      ssnInput.addEventListener('input', function(e) {
+        let val = this.value.replace(/\D/g, '');
+        if (val.length > 3 && val.length <= 5) val = val.slice(0, 3) + '-' + val.slice(3);
+        else if (val.length > 5) val = val.slice(0, 3) + '-' + val.slice(3, 5) + '-' + val.slice(5, 9);
+        this.value = val;
+      });
+    }
+  }
+
+  // ===== Init =====
+  document.addEventListener('DOMContentLoaded', () => {
+    initROI();
+    setDefaultDates();
+    initSSNFormat();
+
+    // Init all signature pads
+    ['sigCanvas2', 'sigCanvas2b', 'sigCanvas3', 'sigCanvas3b', 'sigCanvas4', 'sigCanvas4b', 'sigCanvas7'].forEach(id => {
+      initSignaturePad(id);
+    });
+
+    updateProgress();
+  });
+</script>
+</body>
+</html>
